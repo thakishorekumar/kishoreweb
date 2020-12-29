@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>Kishore Kumar Dharmaraja</title>
+
+	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icon font -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
+<body>
+
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="1">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="assets/images/guy.jpg" alt="">
+			<span class="title">Kishore Kumar Dharmaraja</span>
+			<span class="tagline">AWS & PFSense Site to Site VPN</span>
+		</h1>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky">
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			</div>
+			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="sidebar-left.html">Left Sidebar</a></li>
+							<li><a href="sidebar-right.html">Right Sidebar</a></li>
+							<li><a href="single.html">Blog Post</a></li>
+						</ul>
+					</li>
+					<li class="active"><a href="blog.html">Blog</a></li>
+				</ul>
+			
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>
+
+<main id="main">
+
+	<div class="container">
+	
+	<h1><span id="AWS">AD Power Shell Commands </span></h1>
+	<br>
+		<p><strong>Get Distinguished Name Of an User</strong> 
+		
+		<p>import-module activedirectory<br>
+		$u = get-aduser username<br>
+		$u.DistinguishedName
+		<br>
+			
+		<p><strong>Get Distinguished Name Of an Computer</strong>		
+		
+		<p>import-module activedirectory<br>
+		$u = get-adcomputer computername<br>
+		$u.DistinguishedName
+		<br>
+		
+		<p><strong>Export All Computer Objects to CSV</strong>
+		
+		<p>import-module activedirectory<br>
+		Get-ADComputer -Filter * -Property * | Select-Object Name,OperatingSystem,OperatingSystemServicePack,OperatingSystemVersion | Export-CSV D:\AllWindows.csv -NoTypeInformation -Encoding UTF8<br>
+		
+		<p><strong>Export All User Objects to CSV</strong>
+		
+		<p>import-module activedirectory<br>
+		Get-ADUser -Filter * -Properties sAMAccountName | 
+		select sAMAccountName | Export-CSV "C:\AllUsers.csv"<br>
+		
+		<p><strong>Export All Disabled User Objects to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Search-ADAccount –AccountDisabled -UsersOnly |
+		Select -Property Name,DistinguishedName |
+		Export-CSV "C:\\DisabledADUsers.csv" -NoTypeInformation -Encoding UTF8<br>
+		
+		<p><strong>Export All Inactive Computer Objects to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		$domain = "ad.kishore.guru"<br>
+		$DaysInactive = 90<br>
+		$time = (Get-Date).Adddays(-($DaysInactive))<br>
+		Get-ADComputer -Filter {LastLogonTimeStamp -lt $time} -Properties LastLogonTimeStamp |<br>
+		select-object Name,@{Name="Stamp"; Expression={[DateTime]::FromFileTime($_.lastLogonTimestamp)}} | export-csv D:\90_Computer.csv -notypeinformation<br>
+		
+		<p><strong>Export All OU with Distinguished Name to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Get-ADOrganizationalUnit -filter * | select Name,DistinguishedName | Export-csv -path C:\ADOrganizationalUnitsexport.csv -NoTypeInformation<br>
+		
+		<p><strong>Export All Objects of OU, Users, Groups and Computers with Name, DN, Object class and SID to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Get-ADObject -Filter 'Name -like "*"' |
+		Where-Object {$_.ObjectClass -eq "user" -or $_.ObjectClass -eq "computer" -or $_.ObjectClass -eq "group" -or $_.ObjectClass -eq "organizationalUnit"} | Sort-Object ObjectClass | Export-CSV C:\ExportAD.csv -notypeinformation<br>
+		
+		
+		
+		
+		
+		<p>Log on to AWS portal and select <strong>VPC</strong>.</p>
+		
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B00.png"><img class="aligncenter size-full wp-image-1823" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B00.png" alt="B00" width="379" height="157" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B00.png 379w, https://blog.iandreev.com/wp-content/uploads/2015/03/B00-300x124.png 300w" sizes="(max-width: 379px) 100vw, 379px" /></a></p>
+<div style="border:1px solid red; padding:16px;">
+<p style="text-align:center;"><strong><span style="color:#800000;">IMPORTANT</span> </strong></p>
+<p>You need a public IP on the pfSense WAN. You can&#8217;t use NAT or any type of port forwarding. This won&#8217;t work. Also, pfSense should not be placed on AWS, it should go to another cloud provider or at your home.
+</p>
+</div>
+<div id="toc_container" class="toc_white no_bullets"><p class="toc_title">Contents</p><ul class="toc_list"><li><a href="#AWS"><span class="toc_number toc_depth_1">1</span> AWS</a></li><li><a href="#pfSense_IPsec"><span class="toc_number toc_depth_1">2</span> pfSense, IPsec</a></li><li><a href="#AWS_routing"><span class="toc_number toc_depth_1">3</span> AWS routing</a></li><li><a href="#pfSense_routing"><span class="toc_number toc_depth_1">4</span> pfSense routing</a></li><li><a href="#Testing"><span class="toc_number toc_depth_1">5</span> Testing</a></li></ul></div>
+<h1><span id="AWS">AWS</span></h1>
+<p>Log on to AWS portal and select <strong>VPC</strong>.</p>
+
+
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B01.png"><img class="aligncenter size-full wp-image-1824" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B01.png" alt="B01" width="638" height="355" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B01.png 638w, https://blog.iandreev.com/wp-content/uploads/2015/03/B01-300x167.png 300w" sizes="(max-width: 638px) 100vw, 638px" /></a></p>
+<p>Click on <strong>Start VPC Wizard</strong> button.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B02.png"><img class="aligncenter size-full wp-image-1825" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B02.png" alt="B02" width="681" height="407" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B02.png 681w, https://blog.iandreev.com/wp-content/uploads/2015/03/B02-300x179.png 300w" sizes="(max-width: 681px) 100vw, 681px" /></a></p>
+<p>Choose the third option, <strong>VPC with Public and Private Subnets and Hardware VPN Access</strong>. We&#8217;ll build two instances (VMs). One in the public space and one in the private space. The public instance can be reached from outside, but this instance can also reach the private instance. The private instance can reach the public instance and our local network.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B03.png"><img class="aligncenter size-full wp-image-1826" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B03.png" alt="B03" width="1051" height="449" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B03.png 1051w, https://blog.iandreev.com/wp-content/uploads/2015/03/B03-300x128.png 300w, https://blog.iandreev.com/wp-content/uploads/2015/03/B03-1024x437.png 1024w, https://blog.iandreev.com/wp-content/uploads/2015/03/B03-900x384.png 900w" sizes="(max-width: 1051px) 100vw, 1051px" /></a></p>
+<div style="border:1px solid red; padding:16px;">
+<p style="text-align:center;"><strong><span style="color:#800000;">IMPORTANT</span> </strong></p>
+<p>Make sure that your internal subnet does not overlap with the AWS subnet. IPsec can work only between different subnets.
+</p>
+</div>
+<p>I&#8217;ll use <strong>10.100.0.0/16 </strong>as a VPC subnet and then carve two smaller subnets, <strong>100.100.0.0/24 </strong>which will be my <strong>Public subnet </strong>(named BLOG Public subnet) and <strong>10.100.1.0/24 </strong>as my <strong>Private subnet </strong>(named BLOG Private subnet).</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B04.png"><img class="aligncenter size-full wp-image-1830" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B04.png" alt="B04" width="739" height="435" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B04.png 739w, https://blog.iandreev.com/wp-content/uploads/2015/03/B04-300x177.png 300w" sizes="(max-width: 739px) 100vw, 739px" /></a></p>
+<p>Specify the <strong>Customer Gateway IP</strong> (that&#8217;s the public IP of pfSense), choose <strong>Static</strong> for <strong>Routing Type</strong> and enter the LAN subnet on the pfSense side. Name the <strong>Customer Gateway</strong> and <strong>VPN Connection</strong> accordingly and click on <strong>Create VPC</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B05.png"><img class="aligncenter size-full wp-image-1831" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B05.png" alt="B05" width="1337" height="478" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B05.png 1337w, https://blog.iandreev.com/wp-content/uploads/2015/03/B05-300x107.png 300w, https://blog.iandreev.com/wp-content/uploads/2015/03/B05-1024x366.png 1024w, https://blog.iandreev.com/wp-content/uploads/2015/03/B05-280x100.png 280w, https://blog.iandreev.com/wp-content/uploads/2015/03/B05-900x322.png 900w" sizes="(max-width: 1337px) 100vw, 1337px" /></a></p>
+<p>Once completed (after 2-3 minutes), click on <strong>Virtual Private Gateways </strong>and name your gateway.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B06.png"><img class="aligncenter size-full wp-image-1832" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B06.png" alt="B06" width="561" height="432" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B06.png 561w, https://blog.iandreev.com/wp-content/uploads/2015/03/B06-300x231.png 300w" sizes="(max-width: 561px) 100vw, 561px" /></a></p>
+<p>Click on <strong>Route Tables </strong>and rename your routes. You will notice that the route for the public subnet has <strong>BLOG Public subnet </strong>associated. Name this route as Public Route or however you want. In my case it&#8217;s <strong>BLOG Public Route</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B07.png"><img class="aligncenter size-full wp-image-1833" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B07.png" alt="B07" width="815" height="498" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B07.png 815w, https://blog.iandreev.com/wp-content/uploads/2015/03/B07-300x183.png 300w" sizes="(max-width: 815px) 100vw, 815px" /></a></p>
+<p>Click on the other route and name it, in my case <strong>BLOG Private Route</strong>. Then click on <strong>Subnet Associations </strong>and click <strong>Edit</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B08.png"><img class="aligncenter size-full wp-image-1834" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B08.png" alt="B08" width="683" height="428" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B08.png 683w, https://blog.iandreev.com/wp-content/uploads/2015/03/B08-300x188.png 300w" sizes="(max-width: 683px) 100vw, 683px" /></a></p>
+<p>Associate this route with the <strong>BLOG Private Subnet </strong>and click <strong>Save</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B09.png"><img class="aligncenter size-full wp-image-1835" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B09.png" alt="B09" width="754" height="149" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B09.png 754w, https://blog.iandreev.com/wp-content/uploads/2015/03/B09-300x59.png 300w" sizes="(max-width: 754px) 100vw, 754px" /></a></p>
+<p>At this point, we&#8217;ll create two Amazon Linux instances, but let&#8217;s see what we have. </p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B441.png"><img src="http://blog.iandreev.com/wp-content/uploads/2015/03/B441.png" alt="B44" width="487" height="84" class="aligncenter size-full wp-image-1880" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B441.png 487w, https://blog.iandreev.com/wp-content/uploads/2015/03/B441-300x52.png 300w" sizes="(max-width: 487px) 100vw, 487px" /></a></p>
+<p>Go back to the home screen and click on <strong>EC2</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B10.png"><img class="aligncenter size-full wp-image-1836" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B10.png" alt="B10" width="325" height="199" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B10.png 325w, https://blog.iandreev.com/wp-content/uploads/2015/03/B10-300x184.png 300w" sizes="(max-width: 325px) 100vw, 325px" /></a></p>
+<p>I won&#8217;t go into details, but pick Amazon Linux AMI, choose the CPU/RAM resources (micro, small, etc&#8230;), and then select the proper VPC, the public subnet and enable auto public IP as below. This is our AMI with public access. </p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B11.png"><img class="aligncenter size-full wp-image-1837" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B11.png" alt="B11" width="772" height="338" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B11.png 772w, https://blog.iandreev.com/wp-content/uploads/2015/03/B11-300x131.png 300w" sizes="(max-width: 772px) 100vw, 772px" /></a></p>
+<p>Tag the instance so you know which one is the public.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B12.png"><img class="aligncenter size-full wp-image-1838" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B12.png" alt="B12" width="941" height="173" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B12.png 941w, https://blog.iandreev.com/wp-content/uploads/2015/03/B12-300x55.png 300w, https://blog.iandreev.com/wp-content/uploads/2015/03/B12-900x165.png 900w" sizes="(max-width: 941px) 100vw, 941px" /></a></p>
+<p>Create or use an existing security group, just make sure SSH is allowed.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B13.png"><img class="aligncenter size-full wp-image-1839" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B13.png" alt="B13" width="1321" height="457" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B13.png 1321w, https://blog.iandreev.com/wp-content/uploads/2015/03/B13-300x104.png 300w, https://blog.iandreev.com/wp-content/uploads/2015/03/B13-1024x354.png 1024w, https://blog.iandreev.com/wp-content/uploads/2015/03/B13-900x311.png 900w" sizes="(max-width: 1321px) 100vw, 1321px" /></a></p>
+<p>And finally create or reuse an existing key pair. It doesn&#8217;t matter as long as you know how to use this. Then, create another instance, this time use the private subnet. Name the instance accordingly.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B14.png"><img class="aligncenter size-full wp-image-1840" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B14.png" alt="B14" width="864" height="412" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B14.png 864w, https://blog.iandreev.com/wp-content/uploads/2015/03/B14-300x143.png 300w" sizes="(max-width: 864px) 100vw, 864px" /></a></p>
+<p>From a public IP, ssh to the public AMI. I won&#8217;t go into details (see this <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html" target="_blank">link</a>), but copy the key to this AMI and from here, duplicate this session in putty and ssh to the private AMI. It looks like this on my computer. So, the idea is to ssh to the public, copy the ssh key to the public in order to access the private AMI. </p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B15.png"><img class="aligncenter size-full wp-image-1842" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B15.png" alt="B15" width="559" height="345" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B15.png 559w, https://blog.iandreev.com/wp-content/uploads/2015/03/B15-300x185.png 300w" sizes="(max-width: 559px) 100vw, 559px" /></a></p>
+<p>You can use the public AMI as a backdoor to get to the private AMI. Without the tunnel, you won&#8217;t be able to log to the private AMI. Before we can create the tunnel, go back to the VPC menu, click on the <strong>VPN connections </strong>and then <strong>Tunnel Details </strong>tab. Get the IPs. We&#8217;ll use only the first one. You can create two IPsec tunnels in pfSense if you want. It&#8217;s the same procedure. AWS uses two IPs for their gateways for redundancy.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B16.png"><img class="aligncenter size-full wp-image-1843" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B16.png" alt="B16" width="637" height="363" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B16.png 637w, https://blog.iandreev.com/wp-content/uploads/2015/03/B16-300x171.png 300w" sizes="(max-width: 637px) 100vw, 637px" /></a></p>
+<p>Now that you have the external IPs of the Amazon gateway, click on <strong>Download Configuration</strong> and choose the generic one. Open this file with Wordpad or Notepad++. Notepad won&#8217;t work, there is no support for U*NIX line-endings.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B17.png"><img class="aligncenter size-full wp-image-1844" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B17.png" alt="B17" width="737" height="216" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B17.png 737w, https://blog.iandreev.com/wp-content/uploads/2015/03/B17-300x88.png 300w" sizes="(max-width: 737px) 100vw, 737px" /></a></p>
+<h1><span id="pfSense_IPsec">pfSense, IPsec</span></h1>
+<p>Switch back to pfSense and from the menu, select <strong>VPN | IPsec</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B18.png"><img class="aligncenter size-full wp-image-1845" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B18.png" alt="B18" width="483" height="83" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B18.png 483w, https://blog.iandreev.com/wp-content/uploads/2015/03/B18-300x52.png 300w" sizes="(max-width: 483px) 100vw, 483px" /></a></p>
+<p>Check <strong>Enable IPsec</strong> and create the<strong> Phase 1</strong> (the plus sign on the right).</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B19.png"><img class="aligncenter size-full wp-image-1846" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B19.png" alt="B19" width="766" height="339" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B19.png 766w, https://blog.iandreev.com/wp-content/uploads/2015/03/B19-300x133.png 300w" sizes="(max-width: 766px) 100vw, 766px" /></a></p>
+<p>In the <strong>General Information</strong> section, enter the external IP of the Amazon&#8217;s gateway. If you open the configuration file that you downloaded, you can find that information there as well. Ignore 169.254. addresses.</p>
+<pre class="brush: plain; title: ; notranslate" title="">
+The Customer Gateway inside IP address should be configured on your tunnel
+interface. 
+
+Outside IP Addresses:
+  - Customer Gateway 		        : 104.207.133.238 
+  - Virtual Private Gateway	        : 207.171.167.234
+		
+Inside IP Addresses
+  - Customer Gateway         		: 169.254.255.38/30
+  - Virtual Private Gateway             : 169.254.255.37/30
+
+Configure your tunnel to fragment at the optimal size:
+  - Tunnel interface MTU     : 1436 bytes
+</pre>
+<p>Make sure that you have a small table like this, so you don&#8217;t get confused with subnets and IPs.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/Capture.png"><img src="http://blog.iandreev.com/wp-content/uploads/2015/03/Capture.png" alt="Capture" width="504" height="95" class="aligncenter size-full wp-image-1881" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/Capture.png 504w, https://blog.iandreev.com/wp-content/uploads/2015/03/Capture-300x57.png 300w" sizes="(max-width: 504px) 100vw, 504px" /></a></p>
+<p>For <strong>Phase 1</strong> section, enter the <strong>Pre-Shared Key</strong> and change the <strong>Encryption algorithm</strong> to 128 bits.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B21.png"><img class="aligncenter size-full wp-image-1847" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B21.png" alt="B21" width="627" height="434" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B21.png 627w, https://blog.iandreev.com/wp-content/uploads/2015/03/B21-300x208.png 300w" sizes="(max-width: 627px) 100vw, 627px" /></a></p>
+<div style="border:1px solid red; padding:16px;">
+<p style="text-align:center;"><strong><span style="color:#800000;">IMPORTANT</span> </strong></p>
+<p>Make sure that you have correct values paired for both gateways. Pre-shared keys are different for the two gateway IPs on Amazon&#8217;s side.</p>
+</div>
+<p>Finally, in the <strong>Advanced Options</strong> section, change the parameter for <strong>Dead Peer Detection </strong>from 5 to 3 retries and click <strong>Save</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B22.png"><img class="aligncenter size-full wp-image-1848" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B22.png" alt="B22" width="726" height="348" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B22.png 726w, https://blog.iandreev.com/wp-content/uploads/2015/03/B22-300x144.png 300w" sizes="(max-width: 726px) 100vw, 726px" /></a></p>
+<p>Click the &#8220;<strong>+</strong>&#8221; sign for <strong>Phase 2</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B23.png"><img class="aligncenter size-full wp-image-1849" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B23.png" alt="B23" width="716" height="291" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B23.png 716w, https://blog.iandreev.com/wp-content/uploads/2015/03/B23-300x122.png 300w" sizes="(max-width: 716px) 100vw, 716px" /></a></p>
+<p>&#8230;and again the &#8220;<strong>+</strong>&#8221; sign for <strong>Phase 2</strong> entry.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B24.png"><img class="aligncenter size-full wp-image-1850" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B24.png" alt="B24" width="767" height="192" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B24.png 767w, https://blog.iandreev.com/wp-content/uploads/2015/03/B24-300x75.png 300w" sizes="(max-width: 767px) 100vw, 767px" /></a></p>
+<p>In the first section of <strong>Phase 2</strong>, add the local subnet on Amazon&#8217;s side (<strong>10.100.1.0</strong>).</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B25.png"><img class="aligncenter size-full wp-image-1851" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B25.png" alt="B25" width="591" height="380" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B25.png 591w, https://blog.iandreev.com/wp-content/uploads/2015/03/B25-300x193.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></a></p>
+<p>In <strong>Phase 2 proposal </strong>section, change the value for <strong>AES</strong> to 128 bits and <strong>PFS key group </strong>to 2. Click <strong>Save</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B26.png"><img class="aligncenter size-full wp-image-1853" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B26.png" alt="B26" width="569" height="582" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B26.png 569w, https://blog.iandreev.com/wp-content/uploads/2015/03/B26-293x300.png 293w" sizes="(max-width: 569px) 100vw, 569px" /></a></p>
+<p>From the menu, go to <strong>Status | IPsec</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B27.png"><img class="aligncenter size-full wp-image-1854" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B27.png" alt="B27" width="596" height="357" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B27.png 596w, https://blog.iandreev.com/wp-content/uploads/2015/03/B27-300x180.png 300w" sizes="(max-width: 596px) 100vw, 596px" /></a></p>
+<p>And you should see that the tunnel has been establieshed.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B28.png"><img class="aligncenter size-full wp-image-1855" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B28.png" alt="B28" width="819" height="236" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B28.png 819w, https://blog.iandreev.com/wp-content/uploads/2015/03/B28-300x86.png 300w" sizes="(max-width: 819px) 100vw, 819px" /></a></p>
+<h1><span id="AWS_routing">AWS routing</span></h1>
+<p>Go on the Amazon side, click <strong>VPN Connections</strong> and verify that the tunnel is up too.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B29.png"><img class="aligncenter size-full wp-image-1856" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B29.png" alt="B29" width="768" height="340" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B29.png 768w, https://blog.iandreev.com/wp-content/uploads/2015/03/B29-300x133.png 300w" sizes="(max-width: 768px) 100vw, 768px" /></a></p>
+<p>While there, click on the <strong>Route Tables </strong>on the right, then select your <strong>Private Subnet</strong>. Under <strong>Routes</strong> tab, see if pfSense local subnet is there and that it says <strong>Propagated</strong>. If not, go back to <strong>VPN Connections</strong>, then <strong>Static Routes</strong> and click <strong>Edit</strong>. Add <strong>10.99.0.0/16</strong>. Wait until <strong>Pending</strong> becomes <strong>Available </strong>(usually 5-10) seconds.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B30.png"><img class="aligncenter size-full wp-image-1858" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B30.png" alt="B30" width="611" height="273" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B30.png 611w, https://blog.iandreev.com/wp-content/uploads/2015/03/B30-300x134.png 300w" sizes="(max-width: 611px) 100vw, 611px" /></a></p>
+<p>Then, go to the <strong>Route Tables </strong>, tab <strong>Routes</strong> and see if the route propagated successfully for the Private Route (in my case it&#8217;s <strong>BLOG Private Route</strong>).</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B31.png"><img class="aligncenter size-full wp-image-1860" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B31.png" alt="B31" width="558" height="327" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B31.png 558w, https://blog.iandreev.com/wp-content/uploads/2015/03/B31-300x176.png 300w" sizes="(max-width: 558px) 100vw, 558px" /></a></p>
+<p>If the <strong>10.99.0.0</strong> (pfSense LAN) route is not there, click on <strong>Route Propagation </strong>tab and make sure that the setting for route propagation is set to <strong>Yes</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B32.png"><img class="aligncenter size-full wp-image-1861" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B32.png" alt="B32" width="592" height="204" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B32.png 592w, https://blog.iandreev.com/wp-content/uploads/2015/03/B32-300x103.png 300w" sizes="(max-width: 592px) 100vw, 592px" /></a></p>
+<h1><span id="pfSense_routing">pfSense routing</span></h1>
+<p>In order to access our instance at Amazon, we have to add a new route.  Go back to pfSense and click on <strong>System | Routing</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B33.png"><img class="aligncenter size-full wp-image-1862" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B33.png" alt="B33" width="242" height="193" /></a></p>
+<p>On the <strong>Gateway</strong> tab, click the &#8220;<strong>+</strong>&#8221; sign.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B341.png"><img class="aligncenter size-full wp-image-1864" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B341.png" alt="B34" width="773" height="255" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B341.png 773w, https://blog.iandreev.com/wp-content/uploads/2015/03/B341-300x99.png 300w" sizes="(max-width: 773px) 100vw, 773px" /></a></p>
+<p>Change the interface to LAN, name the gateway (in my case <strong>GW2AWS</strong>), enter the GW IP (that&#8217;s the local pfSense LAN IP, in my case <strong>10.99.0.11</strong>) and click <strong>Save</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B36.png"><img class="aligncenter size-full wp-image-1866" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B36.png" alt="B36" width="643" height="585" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B36.png 643w, https://blog.iandreev.com/wp-content/uploads/2015/03/B36-300x273.png 300w" sizes="(max-width: 643px) 100vw, 643px" /></a></p>
+<p>Click the <strong>Routes</strong> tab and then the &#8220;<strong>+</strong>&#8221; sign. Add a new route. Make sure you choose the gateway that we just created. The destination network should be <strong>10.100.1.0/24</strong>. Click <strong>Save</strong>.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B37.png"><img class="aligncenter size-full wp-image-1867" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B37.png" alt="B37" width="650" height="330" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B37.png 650w, https://blog.iandreev.com/wp-content/uploads/2015/03/B37-300x152.png 300w" sizes="(max-width: 650px) 100vw, 650px" /></a></p>
+<p>Finally, go to <strong>Diagnostics | Routes </strong>and wait for the routes to show up. In my case it looks like this. Verify that you have the route between pfSense local subnet and AWS local subnet.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B38.png"><img class="aligncenter size-full wp-image-1868" src="http://blog.iandreev.com/wp-content/uploads/2015/03/B38.png" alt="B38" width="658" height="306" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B38.png 658w, https://blog.iandreev.com/wp-content/uploads/2015/03/B38-300x140.png 300w" sizes="(max-width: 658px) 100vw, 658px" /></a></p>
+<h1><span id="Testing">Testing</span></h1>
+<p>Since both pfSense and the AMIs are quite locked, we won&#8217;t have much choice in the testing scenarios. We know that ssh port is open on the AMIs, so go to the pfSense console and choose option 8 for shell access. There do:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+ssh 10.100.1.136
+</pre>
+<p>If you receive something like this, you are good.</p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B39.png"><img src="http://blog.iandreev.com/wp-content/uploads/2015/03/B39.png" alt="B39" width="698" height="86" class="aligncenter size-full wp-image-1870" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B39.png 698w, https://blog.iandreev.com/wp-content/uploads/2015/03/B39-300x37.png 300w" sizes="(max-width: 698px) 100vw, 698px" /></a></p>
+<p>Now, pfSense is very-very locked by default. It doesn&#8217;t accept ssh and https is very limited to specific IPs. But, we can create a temp rule, just for the test. Go to <strong>Firewall | Rules</strong>, select the <strong>IPsec</strong> tab and create a rule to pass ICMP traffic as below. </p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B40.png"><img src="http://blog.iandreev.com/wp-content/uploads/2015/03/B40.png" alt="B40" width="551" height="515" class="aligncenter size-full wp-image-1871" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B40.png 551w, https://blog.iandreev.com/wp-content/uploads/2015/03/B40-300x280.png 300w" sizes="(max-width: 551px) 100vw, 551px" /></a></p>
+<p>Go back to the Amazon AMI and do:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+ping 10.99.0.11
+</pre>
+<p>You should get a response from the pfSense box. </p>
+<p><a href="http://blog.iandreev.com/wp-content/uploads/2015/03/B41.png"><img src="http://blog.iandreev.com/wp-content/uploads/2015/03/B41.png" alt="B41" width="455" height="211" class="aligncenter size-full wp-image-1872" srcset="https://blog.iandreev.com/wp-content/uploads/2015/03/B41.png 455w, https://blog.iandreev.com/wp-content/uploads/2015/03/B41-300x139.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></a></p>
+<p>If you made it congrats, now you have full site to site connection. It&#8217;s up to you how you want to configure the firewall rules on pfSense side or security groups on Amazon&#8217;s side. </p>
+
+						
+
+
+
+
+
+						
+						
+						
+						
+ 						
+				</article><!-- #post-## -->
+
+			</div> 
+		</div> <!-- /row post  -->
+
+		
+
+
+				</div>
+			</div>
+		</div> <!-- /row comments -->
+		<div class="clearfix"></div>
+
+	</div>	<!-- /container -->
+
+</main>
+
+<footer id="footer" class="topspace">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Contact</h3>
+				<div class="widget-body">
+					Kishorekumar Dharmaraja
+					<p>+91 9382232212<br>
+						<a href="mailto:#">tha.kishorekumar@gmail.com</a><br>
+						<br>
+						Plot No:93, 7th Street, Sri Lakshmi Nagar, Valasaravakkam, Chennai - 87, Tamil Nadu, S.India
+					</p>	
+				</div>
+			</div>
+
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Follow me</h3>
+				<div class="widget-body">
+					<p class="follow-me-icons">
+						<a href=""><i class="fa fa-twitter fa-2"></i></a>
+						<a href="https://www.linkedin.com/in/kishore-kumar-51a811a2/"><i class="fa fa-linkedin fa-2"></i></a>
+						
+						<a href="https://www.facebook.com/profile.php?id=100001554926622"><i class="fa fa-facebook fa-2"></i></a>
+					</p>
+				</div>
+			</div>
+
+			
+
+			
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p>This Page Contents are Copied from the private Blog for my <a href="https://blog.iandreev.com">reference </a></p>
+				</div>
+			</div>
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-right">
+						 
+						Design: <a href="http://kishore.guru" rel="designer">Kishore Kumar Dharmaraja</a> </p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets/js/template.js"></script>
+</body>
+</html>

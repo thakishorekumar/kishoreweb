@@ -1,0 +1,13 @@
+https://docs.zoho.com/writer/published/150sfef47500e1ef1452a9b8cbc55b9bf8eaf
+
+https://docs.zoho.com/home#allfiles
+
+
+
+Exchange
+<iframe src="https://docs.zoho.com/embed/16l7ibdb29c3d2eee4fc5aeb0880799f477ea" scrolling="no" width="800" height="520" frameborder="0"></iframe>
+
+
+
+Lync
+<iframe src="https://docs.zoho.com/embed/169cg34561319b0e340bfbf00ef7bdcf8fda7" scrolling="no" width="800" height="520" frameborder="0"></iframe>

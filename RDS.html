@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>Kishore Kumar Dharmaraja</title>
+
+	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icon font -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
+<body>
+
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="1">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="assets/images/guy.jpg" alt="">
+			<span class="title">Kishore Kumar Dharmaraja</span>
+			<span class="tagline"></span>
+		</h1>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky">
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			</div>
+			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about me.html">About</a></li>
+					<!--<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="sidebar-left.html">Left Sidebar</a></li>
+							<li><a href="sidebar-right.html">Right Sidebar</a></li>
+							<li><a href="single.html">Blog Post</a></li>
+						</ul>
+					</li>-->
+					<li class="active"><a href="contact.html">Contact</a></li>
+				</ul>
+			
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>
+
+<main id="main">
+
+	<div class="container">
+	
+	<h1><span id="AWS">LAMBDA Configuration to invoke script to STOP & START RDS Instance  </span></h1>
+	<br>
+		
+		
+<p><strong>STEP1</strong>
+<p><strong>==============IAM Policy============</strong>
+<p>You will have to create and IAM Policy. Please follow the below steps:
+ 
+<br>1. Open link https://console.aws.amazon.com/iam
+<br>2. Select Policies -> Create Policy -> Click on JSON and past the below JSON code in the 'Policy Document' field:</p>
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "rds:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+</pre>
+<br>3. Click on 'Review policy'
+<br>4. Enter a name for your IAM Policy and Description form example LambdaPolicy
+<br>5. Click on 'Create policy'. 
+<p>
+	
+<p>		<strong>STEP2</strong>
+<p><strong>==============IAM Role for Lambda============</strong>
+<p>Now, you will have to create a role which will be associated with lambda function in order to allow it to manage RDS instances.
+<br>1. Open link https://console.aws.amazon.com/iam
+<br>2. Navigate to Roles -> Create Role. 
+<br>3. In 'AWS Service' select 'Lambda'. Click on 'Next: Permissions'.
+<br>4. Select the policy you created previously 'LambdaPolicy' and click on 'Next: Review'. 
+<br>5. Put 'LambdaRDSManagement' as a Role Name, set some description and press 'Create Role'. 
+
+		
+<p>	<strong>STEP3</strong>
+<p><strong>==============Lambda Function==============</strong>
+<p>Now you have to create lambda function which will manage the RDS instance. 
+
+<p>1. Open Lambda console in the same region where your RDS instance resides https://console.aws.amazon.com/lambda
+<br>2. Click on 'Create function'
+<br>3. Select 'Author from Scratch'.
+<br>3. In name for example let's call the lambda function 'StartStopInstance'. 
+<br>--> In Runtime choose Node.js 8.10
+<br>--> In role choose 'Choose an existing role'
+<br>--> In Existing role drop down menu choose 'LambdaRDSManagement'
+<br>--> Press 'Create function'
+
+<br>4. You will land on 'Configuration' tab of your function's page.
+<br>5. In 'Function code' section under 'Code entry type' choose Upload a .zip file, and attach <strong>Codes.zip </strong>file which I have attached to the correspondence
+<br>--> In Runtime choose Node.js 8.10
+<br>--> In Handler choose index.handler
+
+<br>6. Click on 'Save' at the top.
+
+<p>Now we have created a lambda function that can stop your RDS instance.
+
+<p><h1>TESTING </h1>
+<p>Please note to test that your RDS instance needs to be in active state, not stopped, but if it is stopped, change the action to start "action": "start" and the function will start the instance.
+************************************************
+	
+<p>	Go to the top right corner and choose from 'Test'. In the ' Configure test event' page select 'Create new test event' and give it a name 'StopRDSinstance' and pass the below details, just change ‘sample-test-instance’ to your instance name, and click create. 
+<pre class="brush: plain; title: ; notranslate" title="">
+	{
+	  "instances": [
+	    "sample-test-instance"
+	  ],
+	  "action": "stop"
+	}
+</pre>
+
+<p>Now if the function executes properly, you will be able to see your RDS instance stopping or starting, depend what option you have chosen.
+<p>********************************************************
+
+<p><strong>STEP4</strong>
+<p><strong>==============Cloudwatch rule to schedule lambda=========</strong>
+
+<p>Now you need to setup CloudWatch rules to trigger our lambda function on schedule. 
+
+<p>--> Stop Instance
+
+<p>1. Open Cloudwatch console in the same region where your RDS instance resides https://us-east-1.console.aws.amazon.com/cloudwatch/
+<p>2. Navigate to 'Rules' -> 'Create Rule'.
+<p>3. Select 'Schedule' instead of default Event Pattern. 
+<p>4. Select 'Cron expression'. You will have to create a cron expression according to your requirement.
+
+<p>For more details on how to create a cron expression, you can refer to link [1].
+
+<p>For example:
+<p>010 13 ? * THU *
+
+<p>The above cron expression will invoke our function every Thursday at 13:10:00 GMT. 
+<p>5. After you set cron time, click on 'Add Target' and choose 'Lambda function' as a Target in place of default 'SNS Topic', and pick your newly create lambda function 'StartStopInstance'. Then in 'Configure Input' section select Constanct (JSON text)
+
+
+
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+	"instances": [
+		"SQLServerInstance"
+		],
+	"action": "stop"
+}
+</pre>
+<p>6. Click on 'Configure Details' -> 'Update rule'. 
+
+<p>--> Start instance  - perform the same steps as above just change point 4 and 5 as per below
+
+<p>For example:
+<p> 0  8 ? * THU *
+
+<p>The above cron expression will invoke our function every Thursday at 08:05:00 GMT. 
+
+<p>After you set cron time, click on 'Add Target' and choose 'Lambda function' as a Target in place of default 'SNS Topic', and pick your newly create lambda function 'StartStopInstance'. Then in 'Configure Input' section select Constanct (JSON text)
+<pre class="brush: bash; title: ; notranslate" title="">
+{
+	"instances": [
+		"SQLServerInstance"
+	],
+	"action": "start"
+}
+</pre>
+<p>When you perform the above settings you will control when to start the instance and when to stop. The process will be automated
+
+<p>[1] 
+<p>CronMaker 
+<p>http://www.cronmaker.com/
+<p>Schedule Expressions Using Rate or Cron - https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
+<p>Schedule Expressions for Rules
+<p>https://docs.aws.amazon.com/console/cloudwatch/events/createrule
+
+	
+		
+<div class="row section topspace">
+			<div class="panel panel-cta"><div class="panel-body">
+				<div class="col-lg-8">
+					<p><b> Click to Download CODES </b></p>  
+					
+				</div>
+				<div class="col-lg-4 text-right">
+				
+				
+				
+				
+					<a href="assets/RDS_start_stop_lambda-cmd/codes.zip" class="btn btn-primary btn-lg">Download CODES</a>
+				</div>
+			</div></div>
+		</div>	
+	
+						
+						
+						
+ 						
+				</article><!-- #post-## -->
+
+			</div> 
+		</div> <!-- /row post  -->
+
+		
+
+
+				</div>
+			</div>
+		</div> <!-- /row comments -->
+		<div class="clearfix"></div>
+
+	</div>	<!-- /container -->
+
+</main>
+
+<footer id="footer" class="topspace">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Contact</h3>
+				<div class="widget-body">
+					Kishorekumar Dharmaraja
+					<p>+91 9382232212<br>
+						<a href="mailto:#">tha.kishorekumar@gmail.com</a><br>
+						<br>
+						Plot No:93, 7th Street, Sri Lakshmi Nagar, Valasaravakkam, Chennai - 87, Tamil Nadu, S.India
+					</p>	
+				</div>
+			</div>
+
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Follow me</h3>
+				<div class="widget-body">
+					<p class="follow-me-icons">
+						<!--<a href=""><i class="fa fa-twitter fa-2"></i></a>-->
+						<a href="https://www.linkedin.com/in/kishore-kumar-51a811a2/"><i class="fa fa-linkedin fa-2"></i></a>
+						
+						<a href="https://www.facebook.com/profile.php?id=100001554926622"><i class="fa fa-facebook fa-2"></i></a>
+					</p>
+				</div>
+			</div>
+
+			
+
+			
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p>All Rights Reserved</p>
+				</div>
+			</div>
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-right">
+						 
+						Design: <a href="http://kishoreweb.com" rel="designer">Kishore Kumar Dharmaraja</a> </p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets/js/template.js"></script>
+</body>
+</html>

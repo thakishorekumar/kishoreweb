@@ -1,0 +1,19 @@
+Cron Expression
+
+36 - minutes
+19 - after 19 hours
+* - every single day
+* - every single month
+? all week days
+* all year
+
+
+
+0 00 * * ? *
+
+00       00      *    *      ?     *
+minutes  hours   day  month  week  year
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html
+
+aws cron generator

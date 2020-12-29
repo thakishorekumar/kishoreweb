@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>Kishore Kumar Dharmaraja</title>
+
+	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icon font -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
+<body>
+
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="1">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="assets/images/guy.jpg" alt="">
+			<span class="title">Kishore Kumar Dharmaraja</span>
+			<span class="tagline">AWS - Windows - VMWARE</span>
+		</h1>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky" role="navigation">
+		<div class="container">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> 
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+				</button>
+			</div>
+			
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about me.html">About Me</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>
+
+<main id="main">
+
+	<div class="container">
+	
+	<h1><span id="AWS">IAM Policy Examples  </span></h1>
+	<br>
+
+<p>AWS access is fully controlled by IAM. IAM works based on json format. Please check the below json examples :
+
+
+ 
+<br></p>	
+		
+<p><strong>Allows full permission to S3 buckets</strong>
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+  "Version": "2012-10-17",
+  "Statement":[{
+    "Effect": "Allow",
+    "Action": "s3:*",
+    "Resource": "*"
+    }
+  ]
+}
+</pre>
+</p>
+
+<p><strong>Allows full permission to defined S3 buckets</strong>
+<br>This IAM policy grants the IAM entity (user, group, or role) it is attached to permission to perform any S3 operation on the bucket named “my_bucket”, as well as that bucket’s contents.
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+  "Version": "2012-10-17",
+  "Statement":[{
+    "Effect": "Allow",
+    "Action": "s3:*",
+    "Resource": ["arn:aws:s3:::my_bucket",
+                 "arn:aws:s3:::my_bucket/*"]
+    }
+  ]
+}
+</pre>
+</p>
+
+<p><strong>Bucket Policy</strong>
+<br>This S3 bucket policy enables the root account 111122223333 and the IAM user Alice under that account to perform any S3 operation on the bucket named “my_bucket”, as well as that bucket’s contents.
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": ["arn:aws:iam::111122223333:user/Alice",
+                "arn:aws:iam::111122223333:root"]
+      },
+      "Action": "s3:*",
+      "Resource": ["arn:aws:s3:::my_bucket",
+                   "arn:aws:s3:::my_bucket/*"]
+    }
+  ]
+}
+</pre>
+</p>
+
+<p><strong>Allows Read and Write Access to Objects in an S3 Bucket</strong>
+<br>The s3:*Object action uses a wildcard as part of the action name. The AllObjectActions statement allows the GetObject, DeleteObject, PutObject, and any other Amazon S3 action that ends with the word "Object".
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ListObjectsInBucket",
+            "Effect": "Allow",
+            "Action": ["s3:ListBucket"],
+            "Resource": ["arn:aws:s3:::bucket-name"]
+        },
+        {
+            "Sid": "AllObjectActions",
+            "Effect": "Allow",
+            "Action": "s3:*Object",
+            "Resource": ["arn:aws:s3:::bucket-name/*"]
+        }
+    ]
+}
+</pre>
+</p>
+
+<p><strong>Restrict access to a bucket to specific IP addresses</strong>
+<br>To secure our files on Amazon S3, we can restrict access to a S3 bucket to specific IP addresses.
+<br>The following bucket policy grants permissions to any user to perform any S3 action on objects in the specified bucket. However, the request must originate from the range of IP addresses specified in the condition. The condition in this statement identifies 192.168.143.* range of allowed IP addresses with one exception, 192.168.143.188.
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+    "Version": "2012-10-17",
+    "Id": "S3PolicyIPRestrict",
+    "Statement": [
+        {
+            "Sid": "IPAllow",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::bucket/*",
+            "Condition" : {
+                "IpAddress" : {
+                    "aws:SourceIp": "192.168.143.0/24"
+                },
+                "NotIpAddress" : {
+                    "aws:SourceIp": "192.168.143.188/32"
+                }
+            }
+        }
+    ]
+}
+</pre>
+</p>
+	
+
+
+<p><strong>Allows specify which VPCs or IP addresses can access my Amazon S3 bucket</strong>
+<br>Following bucket policy blocks traffic to the bucket unless the request is from specified VPC endpoints (aws:SourceVpce) or external IP addresses (aws:SourceIp). Note the following:
+<br>*To use this policy with the aws:SourceVpce condition, you must have a VPC endpoint for Amazon S3.
+<br>*To allow users to perform S3 actions on the bucket from the VPC endpoints or IP addresses, you must explicitly grant those user-level permissions. You can grant user-level permissions on either an AWS Identity and Access Management (IAM) policy or another statement in the bucket policy.
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+  "Version": "2012-10-17",
+  "Id": "VPCe and SourceIP",
+  "Statement": [{
+    "Sid": "VPCe and SourceIP",
+    "Effect": "Deny",
+    "Principal": "*",
+    "Action": "s3:*",
+    "Resource": [
+      "arn:aws:s3:::awsexamplebucket",
+      "arn:aws:s3:::awsexamplebucket/*"
+    ],
+    "Condition": {
+      "StringNotLike": {
+        "aws:sourceVpce": [
+          "vpce-1111111",
+          "vpce-2222222"
+        ]
+      },
+      "NotIpAddress": {
+        "aws:SourceIp": [
+          "11.11.11.11/32",
+          "22.22.22.22/32"
+        ]
+      }
+    }
+  }]
+}
+</pre>
+</p>
+
+
+<p><strong>Allows to list all buckets and its location and able to Read bucket object in an S3 Bucket</strong>
+<br>
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListAllMyBuckets",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::YOURBUCKETNAME",
+                "arn:aws:s3:::YOURBUCKETNAME/*"
+            ]
+        }
+    ]
+}
+</pre>
+</p>
+
+
+<p><strong>Allows only specific user and deny all in S3 Bucket</strong>
+<br>Note: Dont remove root user ARN
+<pre class="brush: plain; title: ; notranslate" title="">
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": ["arn:aws:iam::689304765025:user/guru",
+			"arn:aws:iam::111122223333:root"]
+            },
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::octoberbucketclass",
+                "arn:aws:s3:::octoberbucketclass/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::octoberbucketclass",
+                "arn:aws:s3:::octoberbucketclass/*"
+            ]
+        }
+    ]
+}
+</pre>
+</p>
+
+
+
+<p><strong>Allows Read and Write Access to Objects in an S3 Bucket</strong>
+<br>
+<pre class="brush: plain; title: ; notranslate" title="">
+
+</pre>
+</p>	
+
+
+
+
+<p><strong>Allows Read and Write Access to Objects in an S3 Bucket</strong>
+<br>
+<pre class="brush: plain; title: ; notranslate" title="">
+
+</pre>
+</p>
+
+
+
+
+<p><strong>Allows Read and Write Access to Objects in an S3 Bucket</strong>
+<br>
+<pre class="brush: plain; title: ; notranslate" title="">
+
+</pre>
+</p>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+<div class="row section topspace">
+			<div class="panel panel-cta"><div class="panel-body">
+				<div class="col-lg-8">
+					<p><b> Click to Download after </b></p>  
+					
+				</div>
+				<div class="col-lg-4 text-right">
+				
+				
+				
+				
+					<a href="assets/RDS_start_stop_lambda-cmd/codes.zip" class="btn btn-primary btn-lg">Download After</a>
+				</div>
+			</div></div>
+		</div>	
+	
+						
+						
+						
+ 						
+				</article><!-- #post-## -->
+
+			</div> 
+		</div> <!-- /row post  -->
+
+		
+
+
+				</div>
+			</div>
+		</div> <!-- /row comments -->
+		<div class="clearfix"></div>
+
+	</div>	<!-- /container -->
+
+</main>
+
+<footer id="footer" class="topspace">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Contact</h3>
+				<div class="widget-body">
+					Kishorekumar Dharmaraja
+					<p>+91 9382232212<br>
+						<a href="mailto:#">tha.kishorekumar@gmail.com</a><br>
+						<br>
+						Plot No:93, 7th Street, Sri Lakshmi Nagar, Valasaravakkam, Chennai - 87, Tamil Nadu, S.India
+					</p>	
+				</div>
+			</div>
+
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Follow me</h3>
+				<div class="widget-body">
+					<p class="follow-me-icons">
+						<!--<a href=""><i class="fa fa-twitter fa-2"></i></a>-->
+						<a href="https://www.linkedin.com/in/kishore-kumar-51a811a2/"><i class="fa fa-linkedin fa-2"></i></a>
+						
+						<a href="https://www.facebook.com/profile.php?id=100001554926622"><i class="fa fa-facebook fa-2"></i></a>
+					</p>
+				</div>
+			</div>
+
+			
+
+			
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p>All Rights Reserved</p>
+				</div>
+			</div>
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-right">
+						 
+						Design: <a href="http://kishoreweb.com" rel="designer">Kishore Kumar Dharmaraja</a> </p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets/js/template.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>Kishore Kumar Dharmaraja</title>
+
+	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icon font -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
+<body>
+
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="1">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="assets/images/guy.jpg" alt="">
+			<span class="title">Kishore Kumar Dharmaraja</span>
+			<span class="tagline">AWS & PFSense Site to Site VPN</span>
+		</h1>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky">
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			</div>
+			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="sidebar-left.html">Left Sidebar</a></li>
+							<li><a href="sidebar-right.html">Right Sidebar</a></li>
+							<li><a href="single.html">Blog Post</a></li>
+						</ul>
+					</li>
+					<li class="active"><a href="blog.html">Blog</a></li>
+				</ul>
+			
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>
+
+<main id="main">
+
+	<div class="container">
+	
+	<h1><span id="AWS">About Me </span></h1>
+	<br>
+		<p><strong>PROFESSIONAL SUMMARY:</strong> 
+		
+		<p>•	Have nearly 5 years of experience in IT industry with experience in Server administration in various environments - Window 2008 R2 & 2012 and .<br>
+		•	Hands on experience in supporting Windows Active Directory and GPO.<br>
+		•	Hands on experience with monitoring tools like OpenNMS and Nagios.
+		<br>
+			
+		<p><strong>TOOLS AND TECHNOLOGIES:</strong>		
+		
+		<p><strong>OPERATING SYSTEMS</strong>		- Windows Server 2012, 2008 R2, Win7, Win8                                         <br>
+		<strong>HARDWARE</strong>			- HP Proliant Servers, HP Blade Servers, Dell Power Edge and Cloud Servers.<br>
+		<strong>WEB DESIGN	</strong>		- HTML, WordPress <br>
+		<strong>MONITORING TOOLS</strong>			- Op-manager, Nagios and Open NMS.<br>
+		<strong>OTHER TECHNOLOGIES</strong>			- VMware ESXI Hosts, VCenter and Hyper-V.<br>
+		<strong>SECURITY</strong>			- Sophos Endpoint Protection and Kaspersky.<br>
+		
+		<p><strong>PROFESSIONAL EXPERIENCE:</strong>
+		
+		<p><strong>Computer Age Management Services Pvt. Ltd., Chennai.</strong> From :	Nov 2015 to Till Date<br>
+		Designation: <strong>Systems Administrator</strong><br>
+		
+		<p><strong>Present Responsibilities:</strong><br>
+<br>		
+		• Implementation of Active Directory Password Change Management Site hosted and distributed to all cams CSC locations for their password change by their self.<br>
+		• Implementation of Active Directory Password Expiry mail notification tool. Distribution of mail notification on daily basis to all cams CSC users and non user mail ID’s.<br>
+		• Maintain Users, computers, organizational units, group policies in Active Directory through PowerShell Scripts. <br>
+		• Managing Sites and Services by creating replication links to other sites.<br>
+		• Disabling Inactive computers for more than 30 days and removing it after 1week interval.<br>
+		• Inactive user list with last logon time stamp taken and given to isms for review.<br>
+		• Bulk user creation with its related attributes using script by CSV File Upload.<br>
+		• Bulk password change in the critical time on required basis.<br>
+		• Bulk Systems name change script on required basis.<br>
+		• Move bulk users and computer to the targeted OU on required basis.<br>
+		• Domain Join script on targeted OU.<br>
+		• Structuring OU to make easy to find exception s given to users and computers.<br>
+		• Supporting for Datacenter operations by Monitoring Open NMS, OTRS Ticket closure, Mail Queue logs monitor.<br>
+		• Coordinating with our team during datacenter migrations.<br>
+		• Handling Initial Active Directory Migration with team.<br>
+		• <br>
+		• <br>
+		• <br>
+		• <br>
+		• <br>
+		• <br>
+		
+		<p><strong>Export All Disabled User Objects to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Search-ADAccount –AccountDisabled -UsersOnly |
+		Select -Property Name,DistinguishedName |
+		Export-CSV "C:\\DisabledADUsers.csv" -NoTypeInformation -Encoding UTF8<br>
+		
+		<p><strong>Export All Inactive Computer Objects to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		$domain = "ad.kishore.guru"<br>
+		$DaysInactive = 90<br>
+		$time = (Get-Date).Adddays(-($DaysInactive))<br>
+		Get-ADComputer -Filter {LastLogonTimeStamp -lt $time} -Properties LastLogonTimeStamp |<br>
+		select-object Name,@{Name="Stamp"; Expression={[DateTime]::FromFileTime($_.lastLogonTimestamp)}} | export-csv D:\90_Computer.csv -notypeinformation<br>
+		
+		<p><strong>Export All OU with Distinguished Name to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Get-ADOrganizationalUnit -filter * | select Name,DistinguishedName | Export-csv -path C:\ADOrganizationalUnitsexport.csv -NoTypeInformation<br>
+		
+		<p><strong>Export All Objects of OU, Users, Groups and Computers with Name, DN, Object class and SID to CSV</strong>
+		
+		<p>Import-Module ActiveDirectory<br>
+		Get-ADObject -Filter 'Name -like "*"' |
+		Where-Object {$_.ObjectClass -eq "user" -or $_.ObjectClass -eq "computer" -or $_.ObjectClass -eq "group" -or $_.ObjectClass -eq "organizationalUnit"} | Sort-Object ObjectClass | Export-CSV C:\ExportAD.csv -notypeinformation<br>
+		
+		
+		
+		
+		
+		<div class="row section clients topspace">
+			<h2 class="section-title"><span>Worked For</span></h2>
+			<div class="col-lg-12">
+				<p>
+					<img src="assets/images/sample_clients.jpg" alt="">
+				</p>
+			</div>
+		</div>
+		
+
+						
+
+
+
+
+
+						
+						
+						
+						
+ 						
+				</article><!-- #post-## -->
+
+			</div> 
+		</div> <!-- /row post  -->
+
+		
+
+
+				</div>
+			</div>
+		</div> <!-- /row comments -->
+		<div class="clearfix"></div>
+
+	</div>	<!-- /container -->
+
+</main>
+
+<footer id="footer" class="topspace">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Contact</h3>
+				<div class="widget-body">
+					Kishorekumar Dharmaraja
+					<p>+91 9382232212<br>
+						<a href="mailto:#">tha.kishorekumar@gmail.com</a><br>
+						<br>
+						Plot No:93, 7th Street, Sri Lakshmi Nagar, Valasaravakkam, Chennai - 87, Tamil Nadu, S.India
+					</p>	
+				</div>
+			</div>
+
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Follow me</h3>
+				<div class="widget-body">
+					<p class="follow-me-icons">
+						<a href=""><i class="fa fa-twitter fa-2"></i></a>
+						<a href="https://www.linkedin.com/in/kishore-kumar-51a811a2/"><i class="fa fa-linkedin fa-2"></i></a>
+						
+						<a href="https://www.facebook.com/profile.php?id=100001554926622"><i class="fa fa-facebook fa-2"></i></a>
+					</p>
+				</div>
+			</div>
+
+			
+
+			
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p>This Page Contents are Copied from the private Blog for my <a href="https://blog.iandreev.com">reference </a></p>
+				</div>
+			</div>
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-right">
+						 
+						Design: <a href="http://kishore.guru" rel="designer">Kishore Kumar Dharmaraja</a> </p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets/js/template.js"></script>
+</body>
+</html>
